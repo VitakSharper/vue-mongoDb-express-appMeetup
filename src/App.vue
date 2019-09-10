@@ -1,29 +1,59 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <app-home/>
+        <app-navbar/>
+        <app-footer/>
     </div>
-    <router-view/>
-  </div>
 </template>
+<script>
+    import Home from "./views/Home";
+    import Navbar from "./components/shared/Navbar";
+    import Footer from "./components/shared/Footer";
+
+    export default {
+        components: {
+            appHome: Home,
+            appNavbar: Navbar,
+            appFooter: Footer
+        }
+    }
+</script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+    @import "~bulma/bulma.sass";
+    @import "assets/spacing.css";
+
+    #app {
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
     }
-  }
-}
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .cover {
+        background-size: cover;
+        /*background-position: center;*/
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .hero {
+        position: relative;
+    }
+
+    .hero-body {
+        padding: 3rem 1.5rem;
+    }
+
+    .hero-bg {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1531263060782-b024de9b9793?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
 </style>

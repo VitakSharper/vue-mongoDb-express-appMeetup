@@ -4,10 +4,16 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
-Vue.config.productionTip = false
+import Dropdown from "./components/shared/Dropdown";
+import Hero from "./components/shared/Hero";
+
+Vue.config.productionTip = false;
+
+Vue.component('Dropdown', Dropdown);
+Vue.component('Hero', Hero);
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+    router,
+    store,
+    render: h => h(App)
+}).$mount('#app');
