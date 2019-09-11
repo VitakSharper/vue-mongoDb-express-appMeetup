@@ -3,7 +3,7 @@ const Meetup = require('./models/meetups');
 const User = require('./models/users');
 const Post = require('./models/posts');
 const Thread = require('./models/threads');
-const Category = require('./models/categories')
+const Category = require('./models/categories');
 
 const data = require('./data.js');
 const config = require('./config/dev');
