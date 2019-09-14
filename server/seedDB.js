@@ -62,7 +62,7 @@ class DB {
     }
 }
 
-async function startSeed() {
+(async function startSeed() {
     try {
         if (await mongoose.connect(config.DB_URI, {useNewUrlParser: true})) {
             const db = new DB();
@@ -72,9 +72,7 @@ async function startSeed() {
     } catch (e) {
         console.log(e);
     }
-}
-
-startSeed();
+})();
 
 // mongoose.connect(config.DB_URI, {useNewUrlParser: true})
 //     .then(async () => {

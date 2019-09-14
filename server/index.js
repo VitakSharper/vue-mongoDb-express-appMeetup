@@ -28,7 +28,7 @@ app.use('/api/v1/categories', categoriesRoutes);
 const PORT = process.env.PORT || 3001;
 
 
-async function start() {
+(async function start() {
     try {
         if (await mongoose.connect(config.DB_URI, {
             useNewUrlParser: true, useFindAndModify: false
@@ -41,9 +41,7 @@ async function start() {
     } catch (e) {
         console.log(e)
     }
-}
-
-start();
+})();
 
 
 
