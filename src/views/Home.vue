@@ -7,7 +7,12 @@
           <h1 class="title is-inline">Featured Meetups in "Location"</h1>
           <Dropdown/>
           <button class="button is-primary is-pulled-right m-r-sm">Create Meetups</button>
-          <button class="button is-primary is-pulled-right m-r-sm">All</button>
+          <router-link
+            class="button is-primary is-pulled-right m-r-sm"
+            :to="{name:'find'}"
+            tag="button"
+          >All
+          </router-link>
         </div>
         <div class="row columns is-multiline">
           <app-meetup-item
@@ -34,7 +39,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import CategoryItem from "@/components/CategoryItem.vue";
     import MeetupItem from "@/components/MeetupItem";
 
@@ -49,8 +53,8 @@
         }),
         async mounted() {
             try {
-                const categories = await axios.get('/api/v1/categories');
-                const meetups = await axios.get('/api/v1/meetups');
+                const categories = await this.$http.get('/categories');
+                const meetups = await this.$http.get('/meetups');
                 this.meetups = meetups.data;
                 this.categories = categories.data;
             } catch (e) {

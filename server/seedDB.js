@@ -73,11 +73,3 @@ class DB {
         console.log(e);
     }
 })();
-
-// mongoose.connect(config.DB_URI, {useNewUrlParser: true})
-//     .then(async () => {
-//         const db = new DB();
-//         await db.seedDb();
-//         console.log('You can close connection now!')
-//     })
-//     .catch(err => console.log(err));

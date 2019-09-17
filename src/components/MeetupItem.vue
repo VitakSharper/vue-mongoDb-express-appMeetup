@@ -1,6 +1,11 @@
 <template>
   <div class="column is-one-third">
-    <div class="card large">
+    <router-link
+      :to="{name:'meetupDetail',params:{id:meetup._id}}"
+      class="card large card-meetup-link"
+      tag="div"
+      style="cursor: pointer"
+    >
       <div class="card-image">
         <figure class="image is-4by3">
           <img
@@ -30,7 +35,7 @@
           <div class="background-icon"><span class="icon-twitter"></span></div>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 
 </template>
@@ -47,5 +52,7 @@
 </script>
 
 <style scoped>
-
+  .card-meetup-link {
+    color: black;
+  }
 </style>
