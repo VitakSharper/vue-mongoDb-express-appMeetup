@@ -1,6 +1,6 @@
 const Meetup = require('../models/meetups.js');
 
-exports.getMeetups = function (req, res) {
+exports.getMeetups = (req, res) => {
     Meetup.find({})
         .populate('category')
         .populate('joinedPeople')
