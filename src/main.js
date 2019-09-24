@@ -15,9 +15,7 @@ Vue.config.productionTip = false;
 Vue.component('Dropdown', Dropdown);
 Vue.component('Hero', Hero);
 
-Vue.prototype.$http = axios.create({
-    baseURL: 'http://localhost:8080/api/v1/'
-});
+;
 
 Vue.filter('capitalize', capitalize);
 Vue.filter('formatDate', formatDate);

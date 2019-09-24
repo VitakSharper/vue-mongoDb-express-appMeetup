@@ -47,19 +47,20 @@
             appCategoryItem: CategoryItem,
             appMeetupItem: MeetupItem
         },
-        data: () => ({
-            categories: [],
-            meetups: []
-        }),
-        async mounted() {
-            try {
-                const categories = await this.$http.get('/categories');
-                const meetups = await this.$http.get('/meetups');
-                this.meetups = meetups.data;
-                this.categories = categories.data;
-            } catch (e) {
-                console.log('Error: ', e)
+        data: () => ({}),
+        computed: {
+            meetups() {
+                return this.$store.getters['getMeetups'];
+            },
+            categories() {
+                return this.$store.getters['getCategories'];
             }
+        },
+        async mounted() {
+            await this.$store.dispatch('fetchMeetups');
+            await this.$store.dispatch('fetchCategories');
+
+            console.log('Meetups: ', this.meetups)
         }
     }
 </script>
