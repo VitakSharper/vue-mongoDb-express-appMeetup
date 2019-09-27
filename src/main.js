@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from "./store/";
 import './registerServiceWorker'
 import capitalize from "./filters/capitalize.filter";
 import formatDate from "./filters/date.filter";
 import Dropdown from "./components/shared/Dropdown";
 import Hero from "./components/shared/Hero";
 
-import axios from 'axios';
 
 Vue.config.productionTip = false;
 

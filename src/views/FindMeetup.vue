@@ -62,20 +62,14 @@
 </template>
 
 <script>
-
-
     export default {
-        data: () => ({
-            meetups: null
-        }),
-        async mounted() {
-            try {
-                const response = await this.$http.get('/meetups');
-                this.meetups = response.data;
-            } catch (e) {
-                console.log('Error: ', e)
+        computed: {
+            meetups() {
+                return this.$store.getters.getMeetups;
             }
-
+        },
+        async mounted() {
+            await this.$store.dispatch('fetchMeetups');
         }
     }
 </script>

@@ -1,8 +1,4 @@
 <template>
-  <div v-if="!meetup">
-    <p>Loading...</p>
-  </div>
-
   <div class="meetup-detail-page" v-else>
     <section class="hero">
       <div class="hero-body">
@@ -17,13 +13,13 @@
             <figure class="media-left">
               <p class="image is-64x64">
                 <img class="is-rounded"
-                     :src="meetupCreator.avatar">
+                     :src="meetup.meetupCreator.avatar">
               </p>
             </figure>
             <div class="media-content">
               <div class="content">
                 <p>
-                  Created by <strong>{{meetupCreator.name}}</strong>
+                  Created by <strong>{{meetup.meetupCreator.name}}</strong>
                 </p>
               </div>
             </div>
@@ -163,25 +159,22 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
+    import Vue from 'vue';
+
     export default {
-        data: () => ({
-            meetup: null,
-            threads: {}
-        }),
         computed: {
-            meetupCreator() {
-                return this.meetup.meetupCreator;
-            }
+            ...mapGetters({
+                meetup: 'getMeetup',
+                threads: 'getThreads'
+            })
         },
         async mounted() {
-            try {
-                const response = await this.$http.get(`/meetups/${this.$route.params.id}`);
-                this.meetup = response.data;
-                const threads = await this.$http.get(`/threads?meetupId=${this.$route.params.id}`);
-                this.threads = threads.data;
-            } catch (e) {
-                console.log('Error: ', e);
-            }
+            await this.$store.dispatch('fetchMeetupById', this.$route.params.id);
+            await this.$store.dispatch('threadsForMeetup', this.$route.params.id);
+            // Vue.nextTick(() => {
+            //     console.log('Meetup: ', this.meetup)
+            // })
         }
     }
 </script>

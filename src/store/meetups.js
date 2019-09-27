@@ -1,20 +1,23 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
 
-Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default ({
     state: {
         meetups: {},
         categories: {},
         threads: [],
-        meetup: {}
+        meetup: null
 
     },
     mutations: {
         setMeetups(state, meetups) {
             state.meetups = meetups;
+        },
+        setMeetup(state, meetup) {
+            state.meetup = meetup;
+        },
+        setThreads(state, threads) {
+            state.threads = threads;
         },
         setCategories(state, categories) {
             state.categories = categories;
@@ -24,8 +27,14 @@ export default new Vuex.Store({
         getMeetups(state) {
             return state.meetups;
         },
+        getMeetup(state) {
+            return state.meetup;
+        },
         getCategories(state) {
             return state.categories;
+        },
+        getThreads(state) {
+            return state.threads;
         }
     },
     actions: {
@@ -43,6 +52,22 @@ export default new Vuex.Store({
                 commit('setCategories', categories.data);
             } catch (e) {
                 console.log('Error: ', e)
+            }
+        },
+        async fetchMeetupById({commit}, meetupId) {
+            try {
+                const meetup = await axios.get(`/api/v1/meetups/${meetupId}`);
+                commit('setMeetup', meetup.data);
+            } catch (e) {
+                console.log('Error: ', e);
+            }
+        },
+        async threadsForMeetup({commit}, meetupId) {
+            try {
+                const threads = await axios.get(`/api/v1/threads?meetupId=${meetupId}`);
+                commit('setThreads', threads.data);
+            } catch (e) {
+                console.log(e)
             }
         }
     }

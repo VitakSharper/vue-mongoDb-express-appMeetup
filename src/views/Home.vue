@@ -41,6 +41,7 @@
 <script>
     import CategoryItem from "@/components/CategoryItem.vue";
     import MeetupItem from "@/components/MeetupItem";
+    import {mapGetters} from 'vuex'
 
     export default {
         components: {
@@ -49,18 +50,14 @@
         },
         data: () => ({}),
         computed: {
-            meetups() {
-                return this.$store.getters['getMeetups'];
-            },
-            categories() {
-                return this.$store.getters['getCategories'];
-            }
+            ...mapGetters({
+                categories: 'getCategories',
+                meetups: 'getMeetups'
+            })
         },
         async mounted() {
             await this.$store.dispatch('fetchMeetups');
             await this.$store.dispatch('fetchCategories');
-
-            console.log('Meetups: ', this.meetups)
         }
     }
 </script>
