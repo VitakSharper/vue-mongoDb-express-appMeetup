@@ -8,27 +8,29 @@
           <div v-if="!meetup">
             <app-spinner/>
           </div>
-          <h2 class="subtitle" v-else>
-            {{meetup.startDate|formatDate}}
-          </h2>
-          <h1 class="title">
-            {{meetup.title}}
-          </h1>
-          <article class="media v-center">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <img class="is-rounded"
-                     :src="meetup.meetupCreator.avatar">
-              </p>
-            </figure>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  Created by <strong>{{meetup.meetupCreator.name}}</strong>
+          <div v-else>
+            <h2 class="subtitle">
+              {{meetup.startDate|formatDate}}
+            </h2>
+            <h1 class="title">
+              {{meetup.title}}
+            </h1>
+            <article class="media v-center">
+              <figure class="media-left">
+                <p class="image is-64x64">
+                  <img class="is-rounded"
+                       :src="meetup.meetupCreator.avatar">
                 </p>
+              </figure>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    Created by <strong>{{meetup.meetupCreator.name}}</strong>
+                  </p>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
         </div>
         <div class="is-pulled-right">
           <!-- We will handle this later (: -->
@@ -40,7 +42,11 @@
       <div class="container">
         <div class="columns">
           <div class="column is-3">
-            <aside class="is-medium menu">
+            <div v-if="!meetup">
+              <app-spinner/>
+            </div>
+
+            <aside class="is-medium menu" v-else>
               <div class="meetup-side-box">
 
                 <div class="meetup-side-box-date m-b-sm">
@@ -96,7 +102,10 @@
               <!-- Threads Ends -->
             </aside>
           </div>
-          <div class="column is-7 is-offset-1">
+          <div v-if="!meetup">
+            <app-spinner/>
+          </div>
+          <div class="column is-7 is-offset-1" v-else>
             <div class="content is-medium">
               <h3 class="title is-3">About the Meetup</h3>
               <p>{{meetup.description}}</p>
@@ -107,10 +116,8 @@
                       class="button is-warning">You need authenticate in order to join</button> -->
             </div>
             <!-- Thread List START -->
-            <div v-if="!threads">
-              <app-spinner/>
-            </div>
-            <div class="content is-medium" v-else>
+
+            <div class="content is-medium">
               <h3 class="title is-3">Threads</h3>
               <div
                 class="box"
