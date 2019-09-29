@@ -1,9 +1,14 @@
 <template>
-  <div class="meetup-detail-page" v-else>
+
+
+  <div class="meetup-detail-page">
     <section class="hero">
       <div class="hero-body">
         <div class="container">
-          <h2 class="subtitle">
+          <div v-if="!meetup">
+            <app-spinner/>
+          </div>
+          <h2 class="subtitle" v-else>
             {{meetup.startDate|formatDate}}
           </h2>
           <h1 class="title">
@@ -37,6 +42,7 @@
           <div class="column is-3">
             <aside class="is-medium menu">
               <div class="meetup-side-box">
+
                 <div class="meetup-side-box-date m-b-sm">
                   <p><b>Date</b></p>
                   <p>{{meetup.startDate|formatDate}}</p>
@@ -63,6 +69,7 @@
               <p class="menu-label">
                 Threads
               </p>
+
               <ul>
                 <li
                   v-for="thread in threads"
@@ -100,7 +107,10 @@
                       class="button is-warning">You need authenticate in order to join</button> -->
             </div>
             <!-- Thread List START -->
-            <div class="content is-medium">
+            <div v-if="!threads">
+              <app-spinner/>
+            </div>
+            <div class="content is-medium" v-else>
               <h3 class="title is-3">Threads</h3>
               <div
                 class="box"
@@ -159,8 +169,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-    import Vue from 'vue';
+    import {mapGetters, mapActions} from 'vuex';
 
     export default {
         computed: {
@@ -170,11 +179,11 @@
             })
         },
         async mounted() {
-            await this.$store.dispatch('fetchMeetupById', this.$route.params.id);
-            await this.$store.dispatch('threadsForMeetup', this.$route.params.id);
-            // Vue.nextTick(() => {
-            //     console.log('Meetup: ', this.meetup)
-            // })
+            await this.fetchMeetupById(this.$route.params.id);
+            await this.threadsForMeetup(this.$route.params.id);
+        },
+        methods: {
+            ...mapActions(['fetchMeetupById', 'threadsForMeetup'])
         }
     }
 </script>

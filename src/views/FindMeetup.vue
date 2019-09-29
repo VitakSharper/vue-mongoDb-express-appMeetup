@@ -26,7 +26,9 @@
     <div class="container">
       <section class="section page-find">
         <div class="columns cover is-multiline">
-          <p v-if="!meetups">Loading...</p>
+          <div v-if="!meetups">
+            <app-spinner/>
+          </div>
           <div
             v-else
             v-for="meetup of meetups"

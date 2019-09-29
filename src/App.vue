@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <app-navbar/>
-    <router-view/>
+    <main>
+      <router-view/>
+    </main>
     <app-footer/>
   </div>
 </template>
@@ -28,6 +30,7 @@
     text-align: center;
     color: #2c3e50;
   }
+
 
   .bold {
     font-weight: bold;

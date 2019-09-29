@@ -1,73 +1,36 @@
 import axios from 'axios'
 
-
 export default ({
     state: {
-        meetups: {},
-        categories: {},
-        threads: [],
-        meetup: null
-
+        items: null,
+        item: null
     },
-    mutations: {
-        setMeetups(state, meetups) {
-            state.meetups = meetups;
-        },
-        setMeetup(state, meetup) {
-            state.meetup = meetup;
-        },
-        setThreads(state, threads) {
-            state.threads = threads;
-        },
-        setCategories(state, categories) {
-            state.categories = categories;
-        }
-    },
+    mutations: {},
     getters: {
         getMeetups(state) {
-            return state.meetups;
+            return state.items;
         },
         getMeetup(state) {
-            return state.meetup;
-        },
-        getCategories(state) {
-            return state.categories;
-        },
-        getThreads(state) {
-            return state.threads;
+            return state.item;
         }
     },
     actions: {
-        async fetchMeetups({commit}) {
+        async fetchMeetups({commit, state}) {
+            state.items = null;
             try {
                 const meetups = await axios.get('/api/v1/meetups');
-                commit('setMeetups', meetups.data);
+                commit('setItems', {resource: 'meetups', items: meetups.data}, {root: true});
             } catch (e) {
                 console.log('Error: ', e)
             }
         },
-        async fetchCategories({commit}) {
-            try {
-                const categories = await axios.get('/api/v1/categories');
-                commit('setCategories', categories.data);
-            } catch (e) {
-                console.log('Error: ', e)
-            }
-        },
-        async fetchMeetupById({commit}, meetupId) {
+        async fetchMeetupById({commit, state}, meetupId) {
+            state.item = null;
             try {
                 const meetup = await axios.get(`/api/v1/meetups/${meetupId}`);
-                commit('setMeetup', meetup.data);
+                commit('setItem', {resource: 'meetups', item: meetup.data}, {root: true});
             } catch (e) {
                 console.log('Error: ', e);
-            }
-        },
-        async threadsForMeetup({commit}, meetupId) {
-            try {
-                const threads = await axios.get(`/api/v1/threads?meetupId=${meetupId}`);
-                commit('setThreads', threads.data);
-            } catch (e) {
-                console.log(e)
             }
         }
     }
