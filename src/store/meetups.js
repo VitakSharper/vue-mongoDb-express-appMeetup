@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default ({
+export default {
     state: {
         items: null,
         item: null
@@ -34,4 +34,4 @@ export default ({
             }
         }
     }
-})
+}

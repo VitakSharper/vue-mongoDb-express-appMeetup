@@ -9,25 +9,47 @@
             <figure class="avatar">
               <img src="https://placehold.it/128x128">
             </figure>
-            <form>
+
+            <form @submit.prevent="onLoginHandler">
+              <!--              Email-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="email"
-                         placeholder="Your Email"
-                         autofocus=""
-                         autocomplete="email">
+                  <input
+                    class="input is-large"
+                    type="text"
+                    placeholder="Your Email"
+                    v-model="form.email"
+                  >
+                  <!--                  Email Erors-->
+                  <div v-if="$v.form.email.$error" class="form-error">
+                    <span v-if="!$v.form.email.required" class="help is-danger">Email is required!</span>
+                    <span v-if="!$v.form.email.email" class="help is-danger">Provide Valid Email Address!</span>
+                  </div>
                 </div>
               </div>
+              <!--              Password-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="password"
-                         placeholder="Your Password"
-                         autocomplete="current-password">
+                  <input
+                    class="input is-large"
+                    type="password"
+                    placeholder="Your Password"
+                    v-model="form.password"
+                  >
+                  <!--                  Password Errors-->
+                  <div v-if="$v.form.password.$error" class="form-error">
+                    <span v-if="!$v.form.password.required" class="help is-danger">Password is required!</span>
+                    <span v-if="!$v.form.password.minLength" class="help is-danger">Min 6 characters required!</span>
+                  </div>
                 </div>
               </div>
-              <button class="button is-block is-info is-large is-fullwidth">Login</button>
+
+              <button
+                :disabled="$v.form.$invalid"
+                class="button is-block is-info is-large is-fullwidth"
+                type="submit"
+              >Login
+              </button>
             </form>
           </div>
           <p class="has-text-grey">
@@ -50,13 +72,36 @@
 </template>
 
 <script>
+    import {required, email, minLength, maxLength} from 'vuelidate/lib/validators'
+
     export default {
         data: () => ({
             form: {
                 email: null,
                 password: null
             }
-        })
+        }),
+        validations: {
+            form: {
+                email: {
+                    required,
+                    email
+                },
+                password: {
+                    required,
+                    minLength: minLength(6)
+                }
+            }
+        },
+        mounted() {
+        },
+        methods: {
+            onLoginHandler() {
+                console.log(this.$v)
+                this.$v.form.$touch();
+                this.$store.dispatch('loginWithEmailAndPassword', this.form)
+            }
+        }
     }
 </script>
 

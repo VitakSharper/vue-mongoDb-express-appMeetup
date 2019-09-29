@@ -14,52 +14,75 @@
               <!--              Username-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="text"
-                         placeholder="Username">
+                  <input
+                    class="input is-large"
+                    type="text"
+                    placeholder="Username"
+                    v-model="form.username"
+                  >
                 </div>
               </div>
               <!--              Name-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="text"
-                         placeholder="Name">
+                  <input
+                    class="input is-large"
+                    type="text"
+                    placeholder="Name"
+                    v-model="form.name"
+                  >
                 </div>
               </div>
               <!--              Email-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="email"
-                         placeholder="Your Email">
+                  <input
+                    class="input is-large"
+                    type="email"
+                    placeholder="Your Email"
+                    v-model="form.email"
+                  >
                 </div>
               </div>
               <!--              Avatar-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="text"
-                         placeholder="Avatar"
-                         autocomplete="">
+                  <input
+                    class="input is-large"
+                    type="text"
+                    placeholder="Avatar"
+                    autocomplete=""
+                    v-model="form.avatar"
+                  >
+                  <div v-if="$v.form.avatar.$error" class="form-error">
+                    <span v-if="!$v.form.avatar.url" class="help is-danger">URL Format is not valid !</span>
+                    <span v-if="!$v.form.avatar.supportedFileType"
+                          class="help is-danger">Selected file is not valid !</span>
+                  </div>
                 </div>
               </div>
               <!--              Password-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="password"
-                         placeholder="Your Password"
-                         autocomplete="new-password">
+                  <input
+                    class="input is-large"
+                    type="password"
+                    placeholder="Your Password"
+                    autocomplete="new-password"
+                    v-model="form.password"
+                  >
                 </div>
               </div>
               <!--              Password Confirm-->
               <div class="field">
                 <div class="control">
-                  <input class="input is-large"
-                         type="password"
-                         placeholder="Password Confirmation"
-                         autocomplete="off">
+                  <input
+                    class="input is-large"
+                    type="password"
+                    placeholder="Password Confirmation"
+                    autocomplete="off"
+                    v-model="form.passwordConfirm"
+                  >
                 </div>
               </div>
 
@@ -91,6 +114,9 @@
 </template>
 
 <script>
+    import {required, email, minLength, url, sameAs} from 'vuelidate/lib/validators'
+    import {supportedFileType} from '@/helpers/validators.js'
+
     export default {
         data: () => ({
             form: {
@@ -102,9 +128,27 @@
                 passwordConfirm: null
             }
         }),
+        validations: {
+            form: {
+                username: {required},
+                name: {required},
+                email: {required, email},
+                avatar: {
+                    url,
+                    supportedFileType
+                },
+                password: {
+                    required,
+                    minLength: minLength(6)
+                },
+                passwordConfirm: {required}
+            }
+
+        },
         methods: {
             onFormSubmit() {
-                console.log('Submit Form!!!')
+                this.$v.form.$touch();
+                this.$store.dispatch('registerUsers', this.form);
             }
         }
 

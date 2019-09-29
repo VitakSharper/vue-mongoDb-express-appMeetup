@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import meetups from "./meetups";
 import categories from "./categories";
 import threads from "./threads";
+import auth from "./auth";
 
 
 Vue.use(Vuex);
@@ -22,6 +24,7 @@ export default new Vuex.Store({
     modules: {
         meetups,
         categories,
-        threads
+        threads,
+        auth
     }
 })
