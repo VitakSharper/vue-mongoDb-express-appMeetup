@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const ThreadsCtrl = require('../controllers/threads');
+const {getThreads} = require('../controllers/threads');
 
-router.get('', ThreadsCtrl.getThreads);
+router.get('', getThreads);
 
 module.exports = router;

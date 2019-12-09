@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const MeetupsCtrl = require('../controllers/meetups');
+const {getMeetups, getMeetupById} = require('../controllers/meetups');
 
-router.get('', MeetupsCtrl.getMeetups);
-router.get('/:id', MeetupsCtrl.getMeetupById);
+router.get('', getMeetups);
+router.get('/:id', getMeetupById);
 
 module.exports = router;
